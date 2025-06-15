@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Manager</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #1e1e2f;
+      color: #f2f2f2;
+      margin: 0;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: #2e2e3f;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      width: 100%;
+      max-width: 600px;
+    }
+
+    h1 {
+      color: #61dafb;
+      text-align: center;
+    }
+
+    input[type="text"] {
+      padding: 0.75rem;
+      width: 70%;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      margin-right: 0.5rem;
+    }
+
+    button {
+      padding: 0.75rem 1.2rem;
+      background-color: #61dafb;
+      color: #1e1e2f;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    button:hover {
+      background-color: #4ab0d9;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 1.5rem;
+    }
+
+    li {
+      padding: 1rem;
+      border-bottom: 1px solid #444;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .task-title {
+      font-size: 1.1rem;
+    }
+
+    .delete-btn {
+      background-color: #e74c3c;
+      border: none;
+      color: white;
+      padding: 0.4rem 0.8rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .delete-btn:hover {
+      background-color: #c0392b;
+    }
+
+    @media (max-width: 600px) {
+      input[type="text"] {
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+
+      button {
+        width: 100%;
+      }
+
+      li {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .delete-btn {
+        margin-top: 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📝 Task Manager</h1>
+    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+      <input type="text" id="taskTitle" placeholder="Enter your task here..." />
+      <button id="addBtn">Add Task</button>
+    </div>
+    <ul id="taskList"></ul>
+  </div>
+
+  <script>
+    const API_URL = 'http://localhost:5000/api/tasks';
+    const taskTitleInput = document.getElementById('taskTitle');
+    const taskList = document.getElementById('taskList');
+    const addBtn = document.getElementById('addBtn');
+
+    async function fetchTasks() {
+      try {
+        const res = await fetch(API_URL);
+        const tasks = await res.json();
+        renderTasks(tasks);
+      } catch (err) {
+        console.error('Failed to fetch tasks:', err);
+      }
+    }
+
+    function renderTasks(tasks) {
+      taskList.innerHTML = '';
+      tasks.forEach(task => {
+        const li = document.createElement('li');
+
+        const span = document.createElement('span');
+        span.className = 'task-title';
+        span.textContent = task.title + (task.completed ? ' ✅' : '');
+
+        const del = document.createElement('button');
+        del.textContent = 'Delete';
+        del.className = 'delete-btn';
+        del.onclick = () => deleteTask(task._id);
+
+        li.appendChild(span);
+        li.appendChild(del);
+        taskList.appendChild(li);
+      });
+    }
+
+    async function createTask() {
+      const title = taskTitleInput.value.trim();
+      if (!title) return;
+
+      try {
+        const res = await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title })
+        });
+
+        if (res.ok) {
+          const newTask = await res.json();
+          taskTitleInput.value = '';
+          fetchTasks();
+        } else {
+          console.error('Failed to create task');
+        }
+      } catch (err) {
+        console.error('Error creating task:', err);
+      }
+    }
+
+    async function deleteTask(id) {
+      try {
+        await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+        fetchTasks();
+      } catch (error) {
+        console.error('Error deleting task:', error);
+      }
+    }
+
+    addBtn.addEventListener('click', createTask);
+
+    // Initial load
+    fetchTasks();
+  </script>
+</body>
+</html>
