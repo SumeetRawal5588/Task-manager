@@ -68,3 +68,12 @@ mongoose.connect(MONGO_URI)
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
   })
   .catch(err => console.error('DB connection error:', err));
+
+  const path = require("path");
+
+// Serve frontend
+app.use(express.static(path.join(__dirname, "frontend")));
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", "index.html"));
+});
