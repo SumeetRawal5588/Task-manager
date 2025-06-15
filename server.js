@@ -66,6 +66,13 @@ mongoose.connect('mongodb+srv://sumeet2211:sumeet2211@cluster0.mdkofoq.mongodb.n
   .then(() => console.log('✅ MongoDB Connected'))
   .catch((err) => console.error('❌ DB connection error:', err));
 
+  const PORT =3000;
+
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
+
+
 
   const path = require("path");
 
