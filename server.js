@@ -62,7 +62,7 @@ app.delete('/api/tasks/:id', async (req, res) => {
 
 
 
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(.env.MONGO_URI)
   .then(() => console.log('✅ MongoDB Connected'))
   .catch((err) => console.error('❌ DB connection error:', err));
 
