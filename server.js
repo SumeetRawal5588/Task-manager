@@ -60,12 +60,12 @@ app.delete('/api/tasks/:id', async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 5000;
+
 const MONGO_URI = 'mongodb+srv://usernameee12342:Sumeet12345@backenddb.pyi5aee.mongodb.net/?retryWrites=true&w=majority&appName=BackendDB';
 
 mongoose.connect(MONGO_URI)
   .then(() => {
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    app.listen(3000, () => console.log(`Server running on port 3000`));
   })
   .catch(err => console.error('DB connection error:', err));
 
