@@ -61,11 +61,11 @@ app.delete('/api/tasks/:id', async (req, res) => {
 });
 
 
-mongoose.connect('mongodb+srv://sumeet2211:@Sumeet2211@cluster0.mdkofoq.mongodb.net/task?retryWrites=true&w=majority&appName=Cluster0')
-  .then(() => {
-    app.listen(3000, () => console.log(`Server running on port 3000`));
-  })
-  .catch(err => console.error('DB connection error:', err));
+
+mongoose.connect('mongodb+srv://sumeet2211:@Sumeet2211@cluster0.mdkofoq.mongodb.net/taskdb?retryWrites=true&w=majority&appName=Cluster0')
+  .then(() => console.log('✅ MongoDB Connected'))
+  .catch((err) => console.error('❌ DB connection error:', err));
+
 
   const path = require("path");
 
