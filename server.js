@@ -61,7 +61,7 @@ app.delete('/api/tasks/:id', async (req, res) => {
 });
 
 
-const MONGO_URI = 'mongodb+srv://usernameee12342:Sumeet12345@backenddb.pyi5aee.mongodb.net/?retryWrites=true&w=majority&appName=BackendDB';
+const MONGO_URI = 'mongodb+srv://sumeet2211:@Sumeet2211@cluster0.mdkofoq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
 mongoose.connect(MONGO_URI)
   .then(() => {
