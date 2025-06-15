@@ -74,11 +74,13 @@ app.listen(PORT, () => {
 
 
 
-  const path = require("path");
+ const path = require("path");
 
-// Serve frontend
-app.use(express.static(path.join(__dirname, "frontend")));
+// Static files serve karo current folder se
+app.use(express.static(__dirname));
 
+// Home route pe index.html bhejna
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend", "index.html"));
+  res.sendFile(path.join(__dirname, "index.html"));
 });
+
