@@ -121,7 +121,7 @@
   </div>
 
   <script>
-    const API_URL = 'http://localhost:5000/api/tasks';
+    const API_URL = 'http://localhost:3000/api/tasks';
     const taskTitleInput = document.getElementById('taskTitle');
     const taskList = document.getElementById('taskList');
     const addBtn = document.getElementById('addBtn');
@@ -166,7 +166,7 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ title })
         });
-
+        console.log(res)
         if (res.ok) {
           const newTask = await res.json();
           taskTitleInput.value = '';
