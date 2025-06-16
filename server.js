@@ -62,11 +62,11 @@ app.delete('/api/tasks/:id', async (req, res) => {
 
 
 
-mongoose.connect('mongodb+srv://sumeet2211:sumeet2211@cluster0.mdkofoq.mongodb.net/taskdb?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect("mongodb://mongo:27017/task-manager")
   .then(() => console.log('✅ MongoDB Connected'))
   .catch((err) => console.error('❌ DB connection error:', err));
 
-  const PORT =5000;
+  const PORT =3000;
 
 app.listen(PORT,'0.0.0.0', () => {
   console.log(`🚀 Server running on port ${PORT}`);
